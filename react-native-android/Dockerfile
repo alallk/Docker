@@ -97,3 +97,9 @@ RUN curl -k -L -v -X GET https\://services.gradle.org/distributions/gradle-${GRA
     &&  mv /tmp/gradle-${GRADLE_VERSION}/* ${GRADLE_HOME} \
     &&  rm -rf /tmp/* \
     && chmod 777 -R ${GRADLE_HOME}
+
+#Clear image
+RUN apt clean autoclean \
+    && apt autoremove -y --purge \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/

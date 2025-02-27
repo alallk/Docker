@@ -15,11 +15,13 @@ ARG NODE_VERSION=20.18
 ARG WATCHMAN_VERSION=4.9.0
 ARG CMAKE_VERSION=3.22.1
 ARG GRADLE_VERSION=7.5.1
+ARG BUNDLETOOL_VERSION=1.18.0
 
 # set default environment variables, please don't remove old env for compatibilty issue
 ENV ADB_INSTALL_TIMEOUT=10
 ENV GRADLE_HOME=/opt/gradle
 ENV ANDROID_HOME=/opt/android
+ENV BUNDLETOOL_HOME=/opt/bundletool
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
 ENV ANDROID_NDK_HOME=${ANDROID_HOME}/ndk/$NDK_VERSION
 
@@ -90,13 +92,20 @@ RUN curl -sS https://dl.google.com/android/repository/${SDK_VERSION} -o /tmp/sdk
 RUN git config --global --add safe.directory '*'
 
 # download and unpack gradlew
-#RUN curl -sS https://gradle.org/next-steps/?version=${GRADLE_VERSION}&format=bin -o /tmp/gradle.zip
 RUN curl -k -L -v -X GET https\://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o /tmp/gradle.zip \
     && mkdir -p ${GRADLE_HOME}  \
     && unzip -q -d /tmp /tmp/gradle.zip \
     &&  mv /tmp/gradle-${GRADLE_VERSION}/* ${GRADLE_HOME} \
     &&  rm -rf /tmp/* \
     && chmod 777 -R ${GRADLE_HOME}
+
+# download bundletool and configure to run on alias
+RUN curl -k -L -v -X GET https\://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar -o /tmp/bundletool.jar \
+    && mkdir -p ${BUNDLETOOL_HOME}  \
+    && mv /tmp/bundletool.jar ${BUNDLETOOL_HOME}/bundletool.jar \
+    &&  rm -rf /tmp/* \
+    && alias bundletool='java -jar ${BUNDLETOOL_HOME}/bundletool.jar' \
+    && echo 'alias bundletool="java -jar ${BUNDLETOOL_HOME}/bundletool.jar"' >> ~/.bashrc
 
 #Clear image
 RUN apt clean autoclean \

@@ -1,4 +1,5 @@
 #docker build -t alallk/gradlenpm .
+#docker push alallk/gradlenpm:latest
 FROM gradle:7.6.4-jdk-jammy
 
 ARG COMPOSE_VERSION=2.35.0
@@ -36,8 +37,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends gnupg \
 
 RUN npm install -g n && n stable && n 18.17.1
 
-RUN DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-RUN mkdir -p $DOCKER_CONFIG/cli-plugins
-RUN curl -SL https://github.com/docker/compose/releases/download/v${COMPOSE_VERSION}/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+RUN mkdir -p ~/.docker/cli-plugins/
+RUN curl -SL https://github.com/docker/compose/releases/download/v${COMPOSE_VERSION}/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+RUN chmod +x ~/.docker/cli-plugins/docker-compose
 
 RUN rm -rf /var/lib/apt/lists/*

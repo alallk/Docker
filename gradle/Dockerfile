@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gnupg \
     xauth \ 
     ufw \
     ca-certificates \
+    iputils-ping \
     docker-ce-cli
 
 RUN npm install -g n && n stable && n 18.17.1

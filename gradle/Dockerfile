@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gnupg \
     ufw \
     ca-certificates \
     iputils-ping \
+    netcat-openbsd \
     docker-ce-cli
 
 RUN npm install -g n && n stable && n 18.17.1

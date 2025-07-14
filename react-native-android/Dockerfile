@@ -10,13 +10,13 @@ ENV DEBIAN_FRONTEND=noninteractive
 # set default build arguments
 # https://developer.android.com/studio#command-tools
 ARG SDK_VERSION=commandlinetools-linux-11076708_latest.zip
-ARG ANDROID_BUILD_VERSION=35
-ARG ANDROID_TOOLS_VERSION=35.0.0
+ARG ANDROID_BUILD_VERSION=36
+ARG ANDROID_TOOLS_VERSION=36.0.0
 ARG NDK_VERSION=27.1.12297006
-ARG NODE_VERSION=20.18
+ARG NODE_VERSION=22.14
 ARG WATCHMAN_VERSION=4.9.0
-ARG CMAKE_VERSION=3.22.1
-ARG GRADLE_VERSION=7.5.1
+ARG CMAKE_VERSION=3.30.5
+ARG GRADLE_VERSION=8.14
 ARG BUNDLETOOL_VERSION=1.18.0
 
 # set default environment variables, please don't remove old env for compatibilty issue
